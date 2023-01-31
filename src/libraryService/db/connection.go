@@ -16,7 +16,7 @@ func ConnectToDb() *gorm.DB {
 		log.Fatalln(err)
 	}
 
-	db.AutoMigrate(&model.Book{})
+	db.AutoMigrate(&model.Book{}, &model.Category{}, model.Author{})
 
 	return db
 }

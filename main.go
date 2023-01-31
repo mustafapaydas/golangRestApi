@@ -18,6 +18,14 @@ func main() {
 	router.GET("/", index)
 	router.GET("/books", business.FindAll)
 	router.POST("/book", business.CreateBok)
+	router.PUT("/update", business.Update)
+
+	router.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+	router.GET("/find/:id", business.Find)
 
 	//daha sonra sunucuyu başlatıyoruz
 	router.Run(":8070")
