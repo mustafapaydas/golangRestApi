@@ -1,10 +1,11 @@
 package business
 
 import (
+	"LibraryApi/src/libraryService/db"
+	"LibraryApi/src/libraryService/model"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"libraryApi/src/libraryService/db"
-	"libraryApi/src/libraryService/model"
+
 	"net/http"
 )
 
@@ -52,6 +53,7 @@ func FindAll(c *gin.Context) {
 
 func Find(c *gin.Context) {
 	var book model.Book
+
 	//if err := conn.Find(&book).Error; err != nil {
 	//	c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 	//	return

@@ -2,22 +2,14 @@ package model
 
 type Book struct {
 	BaseModel
-	Isbn       string `gorm:"uniqueIndex"`
-	Name       string
-	PageCount  int
-	Count      int
-	Author     []Author `gorm:"many2many:book_authors;"`
-	CategoryId Category `gorm:"category_id"`
+	Isbn      string   `gorm:"uniqueIndex,index:book_isbn,default:NULL"`
+	Name      string   `gorm:"index:book_name,default:NULL"`
+	PageCount int      `gorm:"default:NULL"`
+	Count     int      `gorm:"default:NULL"`
+	Author    []Author `gorm:"many2many:book_authors;,default:NULL"`
+	Category  Category `gorm:"column:category_id"`
 }
 
-type Author struct {
-	BaseModel
-	Name     string
-	LastName string
-	Email    string
-}
-type Category struct {
-	BaseModel
-	CategoryName string
-	Books        []Book `gorm:"foreignKey:book_id"`
+func (Book) TableName() string {
+	return "tbl_book"
 }

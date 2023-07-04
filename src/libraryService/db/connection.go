@@ -1,14 +1,18 @@
 package db
 
 import (
+	"LibraryApi/src/libraryService/common"
+	"LibraryApi/src/libraryService/model"
+	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"libraryApi/src/libraryService/model"
+
 	"log"
+	"os"
 )
 
 func ConnectToDb() *gorm.DB {
-	dbURL := "postgres://library:library@localhost:5432/library"
+	dbURL := fmt.Sprintf("postgres://%s:%s@localhost:5435/%s", os.Getenv("DB_USERNAME"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_NAME"))
 
 	db, err := gorm.Open(postgres.Open(dbURL), &gorm.Config{})
 
@@ -16,7 +20,7 @@ func ConnectToDb() *gorm.DB {
 		log.Fatalln(err)
 	}
 
-	db.AutoMigrate(&model.Book{}, &model.Category{}, model.Author{})
+	db.AutoMigrate(&model.Book{}, &model.Category{}, model.Author{}, &common.Role{}, &common.Authorization{})
 
 	return db
 }
