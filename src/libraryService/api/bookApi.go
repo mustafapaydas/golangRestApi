@@ -2,13 +2,14 @@ package api
 
 import (
 	"LibraryApi/src/libraryService/business"
+	"LibraryApi/src/libraryService/middleWare"
 	"github.com/gin-gonic/gin"
 )
 
 func SetupBookRoutes(router *gin.RouterGroup) {
 
 	book := router.Group("/book")
-	book.GET("/books", business.FindAll)
+	book.GET("/books", middleWare.AuthCheck("VIEW_BOOK"), business.FindAll)
 	book.POST("/book", business.CreateBok)
 	book.PUT("/update", business.Update)
 }

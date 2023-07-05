@@ -73,7 +73,7 @@ func HasAuth(_auth string) bool {
 }
 
 func checkToken(userToken string) bool {
-	jwksURL := "http://localhost:5001/realms/library/protocol/openid-connect/certs"
+	jwksURL := "http://localhost:5001/auth/realms/library/protocol/openid-connect/certs"
 	ctx, cancel := context.WithCancel(context.Background())
 	options := keyfunc.Options{
 		Ctx: ctx,
@@ -104,7 +104,7 @@ func checkToken(userToken string) bool {
 		groupClaims := claims["groups"].([]interface{})
 		roleList := []string{}
 		for i := range claims["groups"].([]interface{}) {
-			roleList = append(roleList, groupClaims[i].(string))
+			roleList = append(roleList, strings.Replace(groupClaims[i].(string), "/", "", 1))
 		}
 
 		if claims["groups"] != nil {

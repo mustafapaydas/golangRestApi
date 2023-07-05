@@ -6,7 +6,7 @@ type Book struct {
 	Name      string   `gorm:"index:book_name,default:NULL"`
 	PageCount int      `gorm:"default:NULL"`
 	Count     int      `gorm:"default:NULL"`
-	Author    []Author `gorm:"many2many:book_authors;,default:NULL"`
+	Author    []Author `gorm:"many2many:tbl_book_author_relation;,default:NULL"`
 	Category  Category `gorm:"column:category_id"`
 }
 
