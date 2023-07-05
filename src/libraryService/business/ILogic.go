@@ -3,6 +3,7 @@ package business
 import (
 	"LibraryApi/src/libraryService/db"
 	"fmt"
+	"gorm.io/gorm"
 )
 
 type ServiceInterface interface {
@@ -10,6 +11,7 @@ type ServiceInterface interface {
 	Update(e any)
 	Delete(e any)
 	FindByName(e any)
+	FindById(e any)
 }
 
 type AbstractService struct {
@@ -18,10 +20,9 @@ type AbstractService struct {
 
 var _abstractService = new(AbstractService)
 
-func (s *AbstractService) Create(model any) any {
-	db.ConnectToDb().Create(model)
+func (s *AbstractService) Create(model any) *gorm.DB {
+	return db.ConnectToDb().Create(model)
 
-	return &model
 }
 
 func (s *AbstractService) Update(e any)     { fmt.Println("update") }

@@ -10,6 +10,11 @@ import (
 )
 
 var conn = db.ConnectToDb()
+var service AbstractService
+
+type BookLogic struct {
+	*AbstractService
+}
 
 func bind(book model.Book, newBook model.Book) model.Book {
 	newBook.Name = book.Name
@@ -19,12 +24,16 @@ func bind(book model.Book, newBook model.Book) model.Book {
 	return newBook
 }
 
+// @Router /bookapi/book [put]
 func Update(c *gin.Context) {
 	book := model.Book{}
 	c.BindJSON(&book)
 	conn.Model(model.Book{}).Where("id = ?", book.Id).Updates(&book)
 	c.JSON(http.StatusOK, &book)
 }
+
+// @Param        book  body      model.Book  true  "Book JSON"
+// @Router /bookapi/book [post]
 func CreateBok(c *gin.Context) {
 	book := model.Book{}
 	err := c.BindJSON(&book)
@@ -45,12 +54,16 @@ func CreateBok(c *gin.Context) {
 	}
 	c.JSON(http.StatusCreated, &book)
 }
+
+// @Router /bookapi/books [get]
 func FindAll(c *gin.Context) {
 	var books []model.Book
 	c.BindJSON(&books)
 	c.JSON(http.StatusOK, gin.H{"data": books})
 }
 
+// @Param  id   /bookapi/find     int  true  "get book by id"
+// @Router /bookapi/find [get]
 func Find(c *gin.Context) {
 	var book model.Book
 

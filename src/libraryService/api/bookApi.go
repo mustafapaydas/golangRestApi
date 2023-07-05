@@ -8,10 +8,12 @@ import (
 
 func SetupBookRoutes(router *gin.RouterGroup) {
 
-	book := router.Group("/book")
+	book := router.Group("/bookapi")
+
 	book.GET("/books", middleWare.AuthCheck("VIEW_BOOK"), business.FindAll)
 	book.POST("/book", business.CreateBok)
-	book.PUT("/update", business.Update)
+	book.PUT("/book", business.Update)
+	book.GET("/find/:id", business.Find)
 }
 
 func getUserList(c *gin.Context) {

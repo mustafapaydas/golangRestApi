@@ -1,0 +1,95 @@
+definitions:
+  model.Author:
+    properties:
+      books:
+        items:
+          $ref: '#/definitions/model.Book'
+        type: array
+      createdBy:
+        type: string
+      createdDate:
+        type: string
+      email:
+        type: string
+      id:
+        description: gorm.Model
+        type: integer
+      lastName:
+        type: string
+      name:
+        type: string
+      updateDate:
+        type: string
+      updatedBy:
+        type: string
+    type: object
+  model.Book:
+    properties:
+      author:
+        items:
+          $ref: '#/definitions/model.Author'
+        type: array
+      category:
+        $ref: '#/definitions/model.Category'
+      count:
+        type: integer
+      createdBy:
+        type: string
+      createdDate:
+        type: string
+      id:
+        description: gorm.Model
+        type: integer
+      isbn:
+        type: string
+      name:
+        type: string
+      pageCount:
+        type: integer
+      updateDate:
+        type: string
+      updatedBy:
+        type: string
+    type: object
+  model.Category:
+    properties:
+      books:
+        items:
+          $ref: '#/definitions/model.Book'
+        type: array
+      categoryName:
+        type: string
+      createdBy:
+        type: string
+      createdDate:
+        type: string
+      id:
+        description: gorm.Model
+        type: integer
+      updateDate:
+        type: string
+      updatedBy:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /bookapi/book:
+    post:
+      parameters:
+      - description: Book JSON
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/model.Book'
+      responses: {}
+    put:
+      responses: {}
+  /bookapi/books:
+    get:
+      responses: {}
+  /bookapi/find:
+    get:
+      responses: {}
+swagger: "2.0"
